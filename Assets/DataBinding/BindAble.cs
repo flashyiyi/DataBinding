@@ -13,6 +13,7 @@ namespace DataBinding
     public class BindAble
     {
         public Action<PropertyChangedEvent> onPropertyChanged;
+        public bool disableEvent = false;
         protected T GetProperty<T>(ref T property, [CallerMemberName]string propertyName = null)
         {
             if (BindHandler.recordingBindHandler != null)
@@ -33,7 +34,8 @@ namespace DataBinding
 
         public void TriggerPropertyChange(object target,string propertyName = null)
         {
-            onPropertyChanged?.Invoke(new PropertyChangedEvent() { currentTarget = this, target = target, propertyName = propertyName });
+            if (!disableEvent)
+                onPropertyChanged?.Invoke(new PropertyChangedEvent() { currentTarget = this, target = target, propertyName = propertyName });
         }
     }
 }
