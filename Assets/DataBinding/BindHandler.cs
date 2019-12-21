@@ -51,15 +51,15 @@ namespace DataBinding
             return this;
         }
 
-        public BindHandler SetBindAction(Action<PropertyChangedEvent> action)
+        public BindHandler BindAction(Action<PropertyChangedEvent> action)
         {
             this.action = action;
             return this;
         }
 
-        public BindHandler SetBindProperty<T>(Action<T> setter, Func<T> getter)
+        public BindHandler BindProperty<T>(Action<T> setter, Func<T> getter)
         {
-            SetBindAction(e => setter(getter()));
+            BindAction(e => setter(getter()));
             setter(AddExpressionListener(getter));
             return this;
         }
